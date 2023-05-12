@@ -23,7 +23,7 @@ pipeline {
           VERSION_NUMBER = VersionNumber(versionNumberString: '${BUILDS_ALL_TIME}')
           for (def module in modules) {
               def imageName = "mrvikram/${module}"
-              def dockerfile = "${module}/Dockerfile" // Replace with the path to your Dockerfile
+              def dockerfile = "./Dockerfile" // Replace with the path to your Dockerfile
               
               sh "docker build -t ${imageName} -f ${dockerfile} ."
           }
