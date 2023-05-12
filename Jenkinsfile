@@ -38,7 +38,7 @@ pipeline {
           VERSION_NUMBER = VersionNumber(versionNumberString: '${BUILDS_ALL_TIME}')
           for (def module in modules) {
             
-            docker.withRegistry('', 'docker_password') {
+            docker.withRegistry('', 'dockerhubpass') {
               def tag = "version-${VERSION_NUMBER}"
               def imageName = "mrvikram/${module}"
               def dockerfile = "${module}/Dockerfile" // Replace with the path to your Dockerfile
