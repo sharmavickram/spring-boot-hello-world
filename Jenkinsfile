@@ -19,10 +19,10 @@ pipeline {
     stage('Build Docker Images') {
       steps {
         script {
-          def modules = ['config', 'monitoring', 'registry', 'gateway','auth-service','account-service','statistics-service','notification-service','turbine-stream-service'] // Replace with your submodule names
+          def modules = ['spring-boot-hello-world'] // Replace with your submodule names
           VERSION_NUMBER = VersionNumber(versionNumberString: '${BUILDS_ALL_TIME}')
           for (def module in modules) {
-              def imageName = "kmharish1/${module}"
+              def imageName = "mrvikram/${module}"
               def dockerfile = "${module}/Dockerfile" // Replace with the path to your Dockerfile
               
               sh "docker build -t ${imageName} -f ${dockerfile} ./${module}"
@@ -32,13 +32,13 @@ pipeline {
 	stage('Push Docker Images') {
       steps {
         script {
-          def modules = ['config', 'monitoring', 'registry', 'gateway','auth-service','account-service','statistics-service','notification-service','turbine-stream-service'] // Replace with your submodule names
+          def modules = ['spring-boot-hello-world'] // Replace with your submodule names
           VERSION_NUMBER = VersionNumber(versionNumberString: '${BUILDS_ALL_TIME}')
           for (def module in modules) {
             
-            docker.withRegistry('', 'dockerhub2') {
+            docker.withRegistry('', 'docker_password') {
               def tag = "version-${VERSION_NUMBER}"
-              def imageName = "kmharish1/${module}"
+              def imageName = "mrvikram/${module}"
               def dockerfile = "${module}/Dockerfile" // Replace with the path to your Dockerfile
               
               sh "docker tag ${imageName}:latest ${imageName}:${tag}"
