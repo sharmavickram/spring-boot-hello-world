@@ -26,6 +26,8 @@ pipeline {
               def dockerfile = "${module}/Dockerfile" // Replace with the path to your Dockerfile
               
               sh "docker build -t ${imageName} -f ${dockerfile} ./${module}"
+          }
+        }
       }
     }
 	
