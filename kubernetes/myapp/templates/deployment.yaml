@@ -5,6 +5,7 @@ metadata:
   annotations:
     seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'docker/default,runtime/default'
     seccomp.security.alpha.kubernetes.io/defaultProfileName: 'runtime/default'
+    seccomp.security.alpha.kubernetes.io/pod: 'docker/default,runtime/default'
   labels:
     {{ include "myapp.labels" . | nindent 4 }}
 spec:
