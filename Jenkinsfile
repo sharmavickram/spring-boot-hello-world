@@ -29,24 +29,37 @@ pipeline {
       }
     }
 	
-	stage('Push Docker Images') {
-      steps {
-        script {
-          def modules = ['spring-boot-hello-world'] // Replace with your submodule names
-          VERSION_NUMBER = VersionNumber(versionNumberString: '${BUILDS_ALL_TIME}')
-          for (def module in modules) {
-            
-            docker.withRegistry('', 'docker_password') {
-              def tag = "version-${VERSION_NUMBER}"
-              def imageName = "mrvikram/${module}"
-              def dockerfile = "${module}/Dockerfile" // Replace with the path to your Dockerfile
+    stage('Push Docker Images') {
+        steps {
+          script {
+            def modules = ['spring-boot-hello-world'] // Replace with your submodule names
+            VERSION_NUMBER = VersionNumber(versionNumberString: '${BUILDS_ALL_TIME}')
+            for (def module in modules) {
               
-              sh "docker tag ${imageName}:latest ${imageName}:${tag}"
-              sh "docker push ${imageName}:${tag}"
+              docker.withRegistry('', 'docker_password') {
+                def tag = "version-${VERSION_NUMBER}"
+                def imageName = "mrvikram/${module}"
+                def dockerfile = "${module}/Dockerfile" // Replace with the path to your Dockerfile
+                
+                sh "docker tag ${imageName}:latest ${imageName}:${tag}"
+                sh "docker push ${imageName}:${tag}"
+              }
             }
           }
         }
       }
     }
-  }
+
+    stage ('identifying misconfiguration using datree in helm charts'){
+      steps{
+          script{
+            dir('kubernetes/') {
+              sh 'helm datree test myapp/'
+    
+            }
+
+          }
+      }
+
+    }
 }
