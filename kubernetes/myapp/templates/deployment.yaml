@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "myapp.fullname" . }}
   annotations:
-    seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+    seccomp.security.alpha.kubernetes.io/pod: runtime/default
   labels:
     {{ include "myapp.labels" . | nindent 4 }}
 spec:
@@ -46,11 +46,4 @@ spec:
             successThreshold: 1
             failureThreshold: 3
             timeoutSeconds: 10
-          resources:
-            requests:
-              memory: 0.25Gi
-              cpu: 0.5
-            limits:
-              memory: 0.25Gi 
-              cpu: 0.5
-
+        
