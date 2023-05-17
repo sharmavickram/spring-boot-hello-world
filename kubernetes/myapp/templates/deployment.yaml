@@ -8,7 +8,6 @@ metadata:
   labels:
     {{ include "myapp.labels" . | nindent 4 }}
 spec:
-  privileged: false
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
