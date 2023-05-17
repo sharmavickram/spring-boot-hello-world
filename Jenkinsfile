@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git branch:'main', url:'https://github.com/sharmavickram/spring-boot-hello-world.git'
+        git branch:'devops', url:'https://github.com/sharmavickram/spring-boot-hello-world.git'
       }
     }
 
@@ -23,18 +23,34 @@ pipeline {
           VERSION_NUMBER = VersionNumber(versionNumberString: '${BUILDS_ALL_TIME}')
           for (def module in modules) {
               def imageName = "mrvikram/${module}"
-              def dockerfile = "${module}/Dockerfile" // Replace with the path to your Dockerfile
+              def dockerfile = "./Dockerfile" // Replace with the path to your Dockerfile
               
-              sh "docker build -t ${imageName} -f ${dockerfile} ./${module}"
+              sh "docker build -t ${imageName} -f ${dockerfile} ."
+          }
+        }
       }
     }
 	
+
     stage('Push Docker Images') {
         steps {
           script {
             def modules = ['spring-boot-hello-world'] // Replace with your submodule names
             VERSION_NUMBER = VersionNumber(versionNumberString: '${BUILDS_ALL_TIME}')
             for (def module in modules) {
+
+	stage('Push Docker Images') {
+      steps {
+        script {
+          def modules = ['spring-boot-hello-world'] // Replace with your submodule names
+          VERSION_NUMBER = VersionNumber(versionNumberString: '${BUILDS_ALL_TIME}')
+          for (def module in modules) {
+            
+            docker.withRegistry('', 'dockerhubpass') {
+              def tag = "version-${VERSION_NUMBER}"
+              def imageName = "mrvikram/${module}"
+              def dockerfile = "${module}/Dockerfile" // Replace with the path to your Dockerfile
+
               
               docker.withRegistry('', 'docker_password') {
                 def tag = "version-${VERSION_NUMBER}"
