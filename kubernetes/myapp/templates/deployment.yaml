@@ -37,7 +37,8 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: 80
+              scheme: HTTP
             initialDelaySeconds: 60
             periodSeconds: 5
             successThreshold: 1
@@ -46,7 +47,8 @@ spec:
           readinessProbe:
             httpGet:
               path: /
-              port: http
+              port: 80
+              scheme: HTTP
             initialDelaySeconds: 60
             periodSeconds: 5
             successThreshold: 1
