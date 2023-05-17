@@ -3,10 +3,14 @@ kind: Deployment
 metadata:
   name: {{ include "myapp.fullname" . }}
   annotations:
-    seccomp.security.alpha.kubernetes.io/pod: runtime/default
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'docker/default,runtime/default'
+    apparmor.security.beta.kubernetes.io/allowedProfileNames: 'runtime/default'
+    seccomp.security.alpha.kubernetes.io/defaultProfileName: 'runtime/default'
+    apparmor.security.beta.kubernetes.io/defaultProfileName: 'runtime/default'
   labels:
     {{ include "myapp.labels" . | nindent 4 }}
 spec:
+  privileged: false
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -46,4 +50,11 @@ spec:
             successThreshold: 1
             failureThreshold: 3
             timeoutSeconds: 10
-        
+          resources:
+            requests:
+              memory: 0.25Gi
+              cpu: 0.5
+            limits:
+              memory: 0.25Gi 
+              cpu: 0.5
+
