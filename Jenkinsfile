@@ -61,10 +61,9 @@ pipeline {
           }
         }
       }
-      stage('Check kubectl version') {
+      stage('get kubernetes cluster nodes details') {
          steps {
-                 sh 'sudo su'
-                 sh 'kubectl get nodes'
+                 sh 'kubectl get nodes --kubeconfig kubeconfig.yaml'
           }
       }
    }  
