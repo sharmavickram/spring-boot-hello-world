@@ -63,7 +63,8 @@ pipeline {
       }
       stage('Check kubectl version') {
          steps {
-                 sh 'kubectl version'
+                 sh 'sudo su'
+                 sh 'kubectl get nodes'
           }
       }
    }  
