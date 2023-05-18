@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "myapp.fullname" . }}
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
   labels:
     {{ include "myapp.labels" . | nindent 4 }}
 spec:
