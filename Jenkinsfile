@@ -72,11 +72,14 @@ pipeline {
             withCredentials([kubeconfigContent(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
               dir ("kubernetes/"){  
                 sh 'helm list'
-                sh 'helm upgrade --install --set image.repository="mrvikram/spring-boot-hello-world" --set image.tag=":version-4" --set KUBECONFIG=/home/manish_singh/kubeconfig.yaml' spring-boot-hello-world myapp/ ' 
+                sh 'helm upgrade --install --set image.repository="mrvikram/spring-boot-hello-world" --set image.tag=":version-4" --set KUBECONFIG="/home/manish_singh/kubeconfig.yaml" spring-boot-hello-world myapp/ '
+                sh 'helm version' 
               }
             } 
           }		
-		  }
-		}
+		    }
+	    }
+
+      
    }  
 }
