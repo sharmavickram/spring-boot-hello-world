@@ -63,7 +63,7 @@ pipeline {
       }
       stage('get kubernetes cluster nodes details') {
          steps {
-                 sh 'kubectl get nodes --kubeconfig /home/manish_singh/kubeconfig.yaml'
+                 sh 'kubectl get nodes'
           }
       }
       stage('connecting to k8s cluster'){
