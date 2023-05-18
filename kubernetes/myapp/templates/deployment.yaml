@@ -24,6 +24,8 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop: ["NET_RAW"]
+            seccompProfile: 
+              type: RuntimeDefault
           image: "mrvikram/spring-boot-hello-world:version-4"
           command: ["/bin/sh"]
           args: ["-c","sh /usr/local/tomcat/bin/startup.sh;while true; do echo hello; sleep 10;done"]
