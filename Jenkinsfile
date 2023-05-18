@@ -63,10 +63,11 @@ pipeline {
       }
       stage('get kubernetes cluster nodes details') {
          steps {
+                 sh 'export KUBECONFIG=.kube/config/kubeconfig.yaml'
                  sh 'kubectl get nodes'
           }
       }
-      stage('connecting to k8s cluster'){
+      stage('deploying applications to k8s cluster'){
         steps{
           script{
             withCredentials([kubeconfigContent(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
