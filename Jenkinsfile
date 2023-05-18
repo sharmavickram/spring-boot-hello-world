@@ -66,5 +66,17 @@ pipeline {
                  sh 'kubectl get nodes --kubeconfig /home/manish_singh/kubeconfig.yaml'
           }
       }
+      stage('connecting to k8s cluster'){
+        steps{
+          script{
+            withCredentials([kubeconfigFile(credentialsId: 'kubernetes-config', variable: 'KUBECONFIG')]) {
+              dir ("kubernetes/"){  
+                sh 'helm list'
+                sh 'helm upgrade --install --set image.repository="mrvikram/spring-boot-hello-world:version-4" --set image.tag="${VERSION}" spring-boot-hello-world myapp/ ' 
+              }
+            } 
+          }		
+		  }
+		}
    }  
 }
