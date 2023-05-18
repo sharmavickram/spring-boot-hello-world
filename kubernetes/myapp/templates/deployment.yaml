@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "myapp.fullname" . }}
   annotations:
-    seccomp.security.alpha.kubernetes.io/pod: docker/default
+    seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
   labels:
     {{ include "myapp.labels" . | nindent 4 }}
 spec:
