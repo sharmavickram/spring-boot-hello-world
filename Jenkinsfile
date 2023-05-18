@@ -69,7 +69,7 @@ pipeline {
       stage('connecting to k8s cluster'){
         steps{
           script{
-            withCredentials([kubeconfigFile(credentialsId: 'kubernetes-config', variable: 'KUBECONFIG')]) {
+            withCredentials([kubeconfigContent(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
               dir ("kubernetes/"){  
                 sh 'helm list'
                 sh 'helm upgrade --install --set image.repository="mrvikram/spring-boot-hello-world:version-4" --set image.tag="${VERSION}" spring-boot-hello-world myapp/ ' 
