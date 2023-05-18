@@ -73,7 +73,7 @@ pipeline {
               dir ("kubernetes/"){  
                 sh 'helm list'
                 sh 'export KUBECONFIG=/home/manish_singh/kubeconfig.yaml'
-                sh 'helm upgrade --install --set image.repository="mrvikram/spring-boot-hello-world:version-4" --set image.tag="${VERSION}" spring-boot-hello-world myapp/ ' 
+                sh 'helm upgrade --install --set image.repository="mrvikram/spring-boot-hello-world:version-4" spring-boot-hello-world myapp/ ' 
               }
             } 
           }		
